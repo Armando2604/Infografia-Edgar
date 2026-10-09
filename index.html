@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abandono de perros y gatos en México</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#FFF8EC; --card:#FFFFFF; --ink:#1F2937; --muted:#4B5563;
+  --brand:#0F3D3E; --accent:#B93C0B; --on-brand:#FFFFFF; --soft:#E6F2EF; --line:#D9CDB8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10201F; --card:#18302F; --ink:#F3F4F6; --muted:#CBD5D1;
+    --brand:#7FD6C9; --accent:#FFA775; --on-brand:#0B1F1E; --soft:#1F3B3A; --line:#35514F;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10201F; --card:#18302F; --ink:#F3F4F6; --muted:#CBD5D1;
+  --brand:#7FD6C9; --accent:#FFA775; --on-brand:#0B1F1E; --soft:#1F3B3A; --line:#35514F;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;line-height:1.55}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0 0 .5rem}
+.wrap{max-width:900px;margin:0 auto;padding:1rem}
+header{background:var(--brand);color:var(--on-brand);padding:1rem 0 2.2rem}
+.author{text-align:right;font-size:.9rem;font-weight:700}
+.author span{display:block;font-weight:400}
+header h1{font-size:clamp(1.8rem,5vw,2.8rem);margin-top:1rem}
+header p{max-width:620px;margin:.3rem 0 0;font-size:1.05rem}
+.paw{display:inline-block;animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+section{margin:2rem 0}
+section h2{color:var(--brand);font-size:1.6rem;border-bottom:3px solid var(--accent);display:inline-block;padding-bottom:.15rem}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.stat{text-align:center}
+.stat .n{font-size:2.4rem;font-weight:800;color:var(--accent);font-family:Georgia,serif}
+.stat p{margin:0;color:var(--muted);font-size:.92rem}
+button{font:inherit;cursor:pointer}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.tab,.btn{background:var(--soft);color:var(--ink);border:2px solid var(--brand);border-radius:999px;padding:.45rem 1rem;font-weight:700}
+.tab[aria-selected="true"],.btn.primary{background:var(--brand);color:var(--on-brand)}
+.tab:focus-visible,.btn:focus-visible,.flip:focus-visible,.acc:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.panel{display:none}.panel.show{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.bar{background:var(--soft);border-radius:8px;height:26px;margin:.4rem 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width 1.2s;color:#fff;font-style:normal;font-size:.85rem;font-weight:700;padding:3px 8px;white-space:nowrap}
+.flip{background:var(--card);border:2px solid var(--brand);border-radius:14px;padding:1rem;text-align:left;color:var(--ink);min-height:150px;width:100%}
+.flip .ico{font-size:2rem}
+.flip .back{display:none;color:var(--ink)}
+.flip.open .front{display:none}.flip.open .back{display:block}
+.flip small{color:var(--accent);font-weight:700}
+.acc{width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;font-weight:700;margin-top:.5rem;display:flex;justify-content:space-between}
+.accbody{display:none;padding:.7rem 1rem;background:var(--soft);border-radius:0 0 12px 12px}
+.acc[aria-expanded="true"]+.accbody{display:block;animation:fade .4s}
+.quiz .opts{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem}
+.fb{margin-top:.6rem;font-weight:700;min-height:1.5em}
+.cta{background:var(--brand);color:var(--on-brand);border-radius:16px;padding:1.2rem}
+.cta h2{color:var(--on-brand);border-color:var(--on-brand)}
+.cta label{display:flex;gap:.6rem;align-items:center;padding:.4rem 0;cursor:pointer}
+.cta input{width:22px;height:22px;accent-color:var(--accent)}
+.prog{height:12px;background:rgba(255,255,255,.3);border-radius:8px;overflow:hidden;margin-top:.6rem}
+.prog i{display:block;height:100%;width:0;background:#FFD166;transition:width .5s}
+.msg{font-weight:700;margin-top:.5rem;min-height:1.5em}
+#refs{display:none;font-size:.9rem;padding-left:1.6rem}
+#refs li{margin-bottom:.6rem;text-indent:-1.6rem;padding-left:1.6rem;list-style:none}
+footer{font-size:.85rem;color:var(--muted);padding:1rem 0 2rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="author">Edgar Rios<span>Licenciatura en Medicina Veterinaria y Zootecnia</span></div>
+    <h1><span class="paw" aria-hidden="true">🐾</span> Abandono de perros y gatos en México</h1>
+    <p>Un problema social y de salud pública que empieza en el hogar y se resuelve con tenencia responsable. Toca cada elemento para descubrir más.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="reveal" aria-labelledby="datos">
+  <h2 id="datos">Datos generales</h2>
+  <div class="grid" style="margin-top:.8rem">
+    <div class="card stat"><div class="n" data-to="71" data-suf="%">0</div><p>de los hogares mexicanos tiene al menos una mascota (INEGI)</p></div>
+    <div class="card stat"><div class="n" data-to="28" data-suf=" M">0</div><p>perros estimados en el país, según la AMMVEPE</p></div>
+    <div class="card stat"><div class="n" data-to="70" data-suf="%">0</div><p>de ellos, estimado, vive en la calle</p></div>
+    <div class="card stat"><div class="n" data-to="500" data-suf=" mil">0</div><p>animales abandonados al año (estimación de organizaciones)</p></div>
+  </div>
+  <p style="color:var(--muted);font-size:.9rem">Nota: en México no existe un censo oficial de perros y gatos; las cifras de población callejera son estimaciones y varían según la fuente.</p>
+
+  <h3 style="margin-top:1.2rem">¿Por qué los abandonan?</h3>
+  <div class="tabs" role="tablist" aria-label="Causas">
+    <button class="tab" role="tab" aria-selected="true" data-p="p1">Causas principales</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p2">Factores de fondo</button>
+  </div>
+  <div id="p1" class="panel show card">
+    <div>Problemas económicos <div class="bar"><i data-w="16.1">16.1%</i></div></div>
+    <div>Camadas inesperadas <div class="bar"><i data-w="13.4">13.4%</i></div></div>
+    <div>Comportamiento del animal <div class="bar"><i data-w="11.9">11.9%</i></div></div>
+    <div>Pérdida de interés <div class="bar"><i data-w="9.3">9.3%</i></div></div>
+    <small style="color:var(--muted)">Fuente: Gutiérrez-Gallardo (2014), citado en Ayala-Rodríguez et al. (2022).</small>
+  </div>
+  <div id="p2" class="panel card">
+    <p>No se necesita registro para tener un perro, así que abandonarlo es fácil cuando mantenerlo se vuelve "costoso" o "complicado".</p>
+    <p>Los criaderos clandestinos generan animales que no se venden y terminan en la calle. Además, las sanciones por abandono casi no se aplican.</p>
+    <p>El abandono aumenta tras fechas de regalo (Navidad, Reyes, San Valentín) y creció durante la pandemia.</p>
+  </div>
+</section>
+
+<section class="reveal" aria-labelledby="cons">
+  <h2 id="cons">Consecuencias</h2>
+  <p>Toca cada tarjeta para ver el detalle.</p>
+  <div class="grid">
+    <button class="flip" aria-pressed="false"><div class="front"><div class="ico">🦠</div><h3>Salud pública</h3><small>Toca para ver más</small></div><div class="back"><p>Perros y gatos pueden transmitir más de 35 enfermedades a las personas. Entre las más comunes están la rabia, la leptospirosis y la larva migrans.</p></div></button>
+    <button class="flip" aria-pressed="false"><div class="front"><div class="ico">💩</div><h3>Contaminación</h3><small>Toca para ver más</small></div><div class="back"><p>Se estima que los perros abandonados producen media tonelada de heces al día, que contaminan alimentos, agua y aire.</p></div></button>
+    <button class="flip" aria-pressed="false"><div class="front"><div class="ico">💔</div><h3>Bienestar animal</h3><small>Toca para ver más</small></div><div class="back"><p>Hambre, enfermedades, atropellamientos, maltrato y reproducción sin control. Muchos animales que fueron de familia mueren en la calle.</p></div></button>
+    <button class="flip" aria-pressed="false"><div class="front"><div class="ico">🏛️</div><h3>Costo para el Estado</h3><small>Toca para ver más</small></div><div class="back"><p>Se destinan recursos públicos a campañas de esterilización, vacunación y centros de control animal, y algunos animales terminan sacrificados.</p></div></button>
+  </div>
+</section>
+
+<section class="reveal" aria-labelledby="imp">
+  <h2 id="imp">Impacto social</h2>
+  <div class="card" style="margin-top:.8rem">
+    <p>El abandono afecta a toda la comunidad: aumenta el riesgo de mordeduras, accidentes viales y brotes de enfermedades, y refleja una falta de educación sobre tenencia responsable. México ha sido señalado como el país de América Latina con más perros callejeros.</p>
+    <p><b>Mito o realidad:</b> «Todos los perros callejeros nacieron en la calle».</p>
+    <div class="quiz">
+      <div class="opts">
+        <button class="btn" data-a="mito">Realidad</button>
+        <button class="btn" data-a="real">Mito</button>
+      </div>
+      <div class="fb" id="fb" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal" aria-labelledby="sol">
+  <h2 id="sol">Soluciones</h2>
+  <div style="margin-top:.8rem">
+    <button class="acc" aria-expanded="false">✂️ Esterilizar <span>＋</span></button>
+    <div class="accbody">Reduce las camadas no deseadas. Existen campañas gratuitas o de bajo costo en muchos municipios; consulta a tu médico veterinario.</div>
+    <button class="acc" aria-expanded="false">💉 Vacunar y desparasitar <span>＋</span></button>
+    <div class="accbody">La vacunación antirrábica y la desparasitación protegen al animal y a la familia frente a enfermedades zoonóticas.</div>
+    <button class="acc" aria-expanded="false">🏠 Adoptar, no comprar <span>＋</span></button>
+    <div class="accbody">Adoptar en refugios y centros de atención da una segunda oportunidad y evita alimentar criaderos clandestinos.</div>
+    <button class="acc" aria-expanded="false">📚 Educar y exigir leyes <span>＋</span></button>
+    <div class="accbody">Talleres de tenencia responsable, registro de mascotas y sanciones reales por abandono ayudan a cambiar la raíz del problema.</div>
+  </div>
+</section>
+
+<section class="reveal cta" aria-labelledby="cta">
+  <h2 id="cta">Llamado a la acción</h2>
+  <p>Una mascota es un compromiso de toda su vida. Marca lo que te comprometes a hacer:</p>
+  <label><input type="checkbox"> Adoptaré en lugar de comprar</label>
+  <label><input type="checkbox"> Esterilizaré a mi mascota</label>
+  <label><input type="checkbox"> Mantendré sus vacunas al día</label>
+  <label><input type="checkbox"> Compartiré esta infografía</label>
+  <div class="prog" aria-hidden="true"><i id="pb"></i></div>
+  <div class="msg" id="msg" role="status" aria-live="polite"></div>
+</section>
+
+<section class="reveal" aria-labelledby="ref">
+  <h2 id="ref">Referencias</h2><br>
+  <button class="btn primary" id="rbtn" aria-expanded="false" style="margin-top:.6rem">Ver referencias (APA 7)</button>
+  <ol id="refs">
+    <li>Ayala-Rodríguez, M. G., Martínez-Guerrero, M. G., Méndez-Sánchez, S., Pérez-García, A., Soto-Gutiérrez, D., Martínez-Franco, G. A., &amp; Angel-Hernández, A. (2022). Estrategias de control para la población canina feral en el estado de Guanajuato. <i>Jóvenes en la Ciencia, 14</i>, 1–7. https://doi.org/10.15174/jc.2022.3476</li>
+    <li>Infobae. (2023, 13 de marzo). <i>Mascotas en México: un sector invisible para las estadísticas</i>. https://www.infobae.com/mascotas/2023/03/13/mascotas-en-mexico-un-sector-invisible-para-las-estadisticas/</li>
+    <li>El Financiero. (2026, 28 de julio). <i>Los adoptaron en pandemia y los dejaron después: México encabeza la crisis del abandono de perros</i>. https://www.elfinanciero.com.mx/nacional/2026/07/28/los-adoptaron-en-pandemia-y-los-dejaron-despues-mexico-encabeza-la-crisis-del-abandono-de-perros/</li>
+  </ol>
+</section>
+</main>
+<footer class="wrap">Infografía educativa · Edgar Rios · Medicina Veterinaria y Zootecnia</footer>
+
+<script>
+(function(){
+  var $=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+  // Revelado al hacer scroll + contadores + barras
+  function counters(el){
+    $('.n',el).forEach(function(n){
+      var to=+n.dataset.to,suf=n.dataset.suf||'',t0=null;
+      function step(ts){t0=t0||ts;var p=Math.min((ts-t0)/1200,1);n.textContent=Math.round(to*p)+suf;if(p<1)requestAnimationFrame(step)}
+      requestAnimationFrame(step);
+    });
+    $('.bar i',el).forEach(function(b){b.style.width=(+b.dataset.w*5)+'%'});
+  }
+  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');counters(e.target);io.unobserve(e.target)}});
+  },{threshold:.15}):null;
+  $('.reveal').forEach(function(s){if(io)io.observe(s);else{s.classList.add('in');counters(s)}});
+
+  // Pestañas
+  $('.tab').forEach(function(t){t.addEventListener('click',function(){
+    $('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
+    t.setAttribute('aria-selected','true');
+    $('.panel').forEach(function(p){p.classList.remove('show')});
+    document.getElementById(t.dataset.p).classList.add('show');
+    counters(document.getElementById(t.dataset.p));
+  })});
+
+  // Tarjetas que se voltean
+  $('.flip').forEach(function(f){f.addEventListener('click',function(){
+    var o=f.classList.toggle('open');f.setAttribute('aria-pressed',o);
+  })});
+
+  // Quiz
+  $('.quiz .btn').forEach(function(b){b.addEventListener('click',function(){
+    document.getElementById('fb').textContent=b.dataset.a==='real'
+      ?'¡Correcto! Es un mito: la población callejera proviene en buena parte de animales domésticos abandonados por sus dueños.'
+      :'Es un mito: muchos perros callejeros fueron domésticos y terminaron en la calle por abandono.';
+  })});
+
+  // Acordeón
+  $('.acc').forEach(function(a){a.addEventListener('click',function(){
+    var o=a.getAttribute('aria-expanded')==='true';
+    a.setAttribute('aria-expanded',!o);a.lastElementChild.textContent=o?'＋':'－';
+  })});
+
+  // Compromisos
+  var cks=$('.cta input');
+  cks.forEach(function(c){c.addEventListener('change',function(){
+    var n=cks.filter(function(x){return x.checked}).length;
+    document.getElementById('pb').style.width=(n/cks.length*100)+'%';
+    document.getElementById('msg').textContent=n===cks.length?'¡Gracias! Eres parte de la solución. 🐶🐱':(n+' de '+cks.length+' compromisos');
+  })});
+
+  // Referencias
+  var rb=document.getElementById('rbtn'),rf=document.getElementById('refs');
+  rb.addEventListener('click',function(){
+    var show=rf.style.display!=='block';rf.style.display=show?'block':'none';
+    rb.setAttribute('aria-expanded',show);rb.textContent=show?'Ocultar referencias':'Ver referencias (APA 7)';
+  });
+})();
+</script>
+</body>
+</html>
